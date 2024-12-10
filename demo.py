@@ -47,9 +47,9 @@ def save_response_content(response, destination):
                 f.write(chunk) 
 # Tải tệp mô hình từ Google Drive nếu chưa tồn tại 
 if not os.path.exists(output): 
-try: 
-    download_file_from_google_drive(url, output) 
-except Exception as e: 
+    try: 
+        download_file_from_google_drive(url, output) 
+    except Exception as e: 
         st.error(f"Không thể tải tệp mô hình từ Google Drive: {e}")
 
 if file is not None: 
