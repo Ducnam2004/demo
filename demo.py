@@ -21,9 +21,9 @@ labels_dict = bidict({"Accessibility":0, "Female":1, "Male":2, "No Smoking":3, "
 file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 
 if file is not None: 
-    # Đọc ảnh trực tiếp từ file tải lên 
-    img = Image.open(file) 
-    feature = hog_features(img)
+    # Đọc ảnh trực tiếp từ bộ nhớ 
+    img = Image.open(io.BytesIO(file.getvalue())) 
+    feature_vector = hog_features(img)
 
     column_1, column_2 = st.columns(2)
     with column_1:
@@ -35,7 +35,7 @@ if file is not None:
         img = Image.open(path_to_image)
         st.image(img)
     with column_2:
-        with open("./svm_model_hog.pkl", "rb") as file:
+        with open(""D:/IndoorSignages-20241113T120343Z-001/IndoorSignages/no_augmentation/models/svm_model_hog.pkl"", "rb") as file:
             model = load(file)
         y_pred = model.predict(feature.reshape(1, -1))
         with st.spinner("Đang dự đoán"):
