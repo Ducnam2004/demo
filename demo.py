@@ -20,10 +20,9 @@ def hog_features(img):
 labels_dict = bidict({"Accessibility":0, "Female":1, "Male":2, "No Smoking":3, "Wifi":4})
 file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 
-if file is not None:
-    path_to_image = "./image/" + file.name
-    # Đọc ảnh từ đường dẫn
-    img = Image.open(path_to_image)
+if file is not None: 
+    # Đọc ảnh trực tiếp từ file tải lên 
+    img = Image.open(file) 
     feature = hog_features(img)
 
     column_1, column_2 = st.columns(2)
