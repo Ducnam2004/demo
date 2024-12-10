@@ -60,16 +60,16 @@ if file is not None:
     column_1, column_2 = st.columns(2)
     with column_1:
         st.header("Ảnh đầu vào")
-    with column_2:
-        st.header("HOG + SVM")
-
-    with column_1:
-        img = Image.open(path_to_image)
         st.image(img)
     with column_2:
-        with open("D:/IndoorSignages-20241113T120343Z-001/IndoorSignages/no_augmentation/models/svm_model_hog.pkl", "rb") as file:
-            model = load(file)
-        y_pred = model.predict(feature.reshape(1, -1))
-        with st.spinner("Đang dự đoán"):
-            time.sleep(1)
-        st.header(labels_dict.inverse[y_pred[0]])
+        st.header("HOG + SVM")
+        model_path = "./svm_model_hog.pkl"     # Đường dẫn đến tệp mô hình 
+        if os.path.exists(model_path): 
+            with open(model_path, "rb") as model_file: 
+                model = load(model_file) 
+            y_pred = model.predict(feature_vector.reshape(1, -1)) 
+            with st.spinner("Đang dự đoán"): 
+                time.sleep(1) 
+            st.header(labels_dict.inverse[y_pred[0]]) 
+        else: 
+            st.error("Không tìm thấy file mô hình SVM. Vui lòng kiểm tra đường dẫn đến file.")
