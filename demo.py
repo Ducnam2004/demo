@@ -4,7 +4,8 @@ from PIL import Image
 from pickle import load
 from skimage import feature
 from bidict import bidict
-
+import gdown 
+import os
 st.header("BHXLA - HCMUS - 2024-2025")
 
 def hog_features(img):
@@ -20,6 +21,13 @@ def hog_features(img):
 labels_dict = bidict({"Accessibility":0, "Female":1, "Male":2, "No Smoking":3, "Wifi":4})
 file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 
+# URL chia sẻ Google Drive 
+url = 'https://drive.google.com/uc?id=<1-cffp5jtQq9y6QBpJmY72fSTy8B07bK_>' 
+output = 'svm_model_hog.pkl' 
+# Tải tệp mô hình từ Google Drive nếu chưa tồn tại 
+if not os.path.exists(output): 
+    gdown.download(url, output, quiet=False)
+    
 if file is not None: 
     # Đọc ảnh trực tiếp từ bộ nhớ 
     img = Image.open(io.BytesIO(file.getvalue())) 
