@@ -53,7 +53,7 @@ if not os.path.exists(output):
         st.error(f"Không thể tải tệp mô hình từ Google Drive: {e}")
 
 if file is not None: 
-    # Đọc ảnh trực tiếp từ bộ nhớ 
+    # Đọc ảnh từ tệp tải lên trực tiếp từ bộ nhớ 
     img = Image.open(io.BytesIO(file.getvalue())) 
     feature_vector = hog_features(img)
 
