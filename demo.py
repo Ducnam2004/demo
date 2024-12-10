@@ -35,7 +35,7 @@ if file is not None:
         img = Image.open(path_to_image)
         st.image(img)
     with column_2:
-        with open("./svm_model_hog.pkl", "rb") as file:
+        with open("https://drive.google.com/file/d/1-cffp5jtQq9y6QBpJmY72fSTy8B07bK_/view?usp=drive_link", "rb") as file:
             model = load(file)
         y_pred = model.predict(feature.reshape(1, -1))
         with st.spinner("Đang dự đoán"):
