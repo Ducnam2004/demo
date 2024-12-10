@@ -1,3 +1,4 @@
-streamlit
-skimage
+streamlit==1.40.2
+Pillow
+scikit-image
 bidict
