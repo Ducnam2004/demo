@@ -35,7 +35,7 @@ if file is not None:
         img = Image.open(path_to_image)
         st.image(img)
     with column_2:
-        with open(""D:/IndoorSignages-20241113T120343Z-001/IndoorSignages/no_augmentation/models/svm_model_hog.pkl"", "rb") as file:
+        with open("D:/IndoorSignages-20241113T120343Z-001/IndoorSignages/no_augmentation/models/svm_model_hog.pkl", "rb") as file:
             model = load(file)
         y_pred = model.predict(feature.reshape(1, -1))
         with st.spinner("Đang dự đoán"):
