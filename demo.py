@@ -27,7 +27,8 @@ url = 'https://drive.google.com/uc?id=<1-cffp5jtQq9y6QBpJmY72fSTy8B07bK_>'
 output = 'svm_model_hog.pkl' 
 # Hàm tải tệp từ Google Drive 
 def download_file_from_google_drive(url, destination): 
-    session = requests.Session() response = session.get(url, stream=True) 
+    session = requests.Session() 
+    response = session.get(url, stream=True) 
     token = get_confirm_token(response) 
     if token: 
         params = {'confirm': token} 
