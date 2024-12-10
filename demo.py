@@ -4,8 +4,9 @@ from PIL import Image
 from pickle import load
 from skimage import feature
 from bidict import bidict
-import gdown 
-import os
+import io 
+import os 
+import requests
 st.header("BHXLA - HCMUS - 2024-2025")
 
 def hog_features(img):
@@ -24,10 +25,31 @@ file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 # URL chia sẻ Google Drive 
 url = 'https://drive.google.com/uc?id=<1-cffp5jtQq9y6QBpJmY72fSTy8B07bK_>' 
 output = 'svm_model_hog.pkl' 
+# Hàm tải tệp từ Google Drive 
+def download_file_from_google_drive(url, destination): 
+    session = requests.Session() response = session.get(url, stream=True) 
+    token = get_confirm_token(response) 
+    if token: 
+        params = {'confirm': token} 
+        response = session.get(url, params=params, stream=True) 
+    save_response_content(response, destination) 
+def get_confirm_token(response): 
+    for key, value in response.cookies.items(): 
+        if key.startswith('download_warning'): 
+            return value return None 
+def save_response_content(response, destination): 
+    CHUNK_SIZE = 32768 
+    with open(destination, "wb") as f: 
+        for chunk in response.iter_content(CHUNK_SIZE): 
+            if chunk: 
+                f.write(chunk) 
 # Tải tệp mô hình từ Google Drive nếu chưa tồn tại 
 if not os.path.exists(output): 
-    gdown.download(url, output, quiet=False)
-    
+try: 
+    download_file_from_google_drive(url, output) 
+except Exception as e: 
+        st.error(f"Không thể tải tệp mô hình từ Google Drive: {e}")
+
 if file is not None: 
     # Đọc ảnh trực tiếp từ bộ nhớ 
     img = Image.open(io.BytesIO(file.getvalue())) 
