@@ -22,7 +22,7 @@ def hog_features(img):
 labels_dict = bidict({"Accessibility":0, "Female":1, "Male":2, "No Smoking":3, "Wifi":4})
 file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 # URL chia sẻ Google Drive 
-url = 'https://drive.google.com/uc?id=<1-EPyj2Z_oqpE-dOaZggIupq3i_Hne59Y>' 
+url = 'https://drive.google.com/uc?id=1-EPyj2Z_oqpE-dOaZggIupq3i_Hne59Y' 
 output = 'svm_model_hog.pkl' 
 # Hàm tải tệp từ Google Drive 
 def download_file_from_google_drive(url, destination): 
