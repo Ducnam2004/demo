@@ -24,11 +24,11 @@ labels_dict = bidict({"Accessibility":0, "Female":1, "Male":2, "No Smoking":3, "
 file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 
 output = 'svm_model_hog.joblib'  # Đổi từ pkl sang joblib
-
+url = 'https://drive.google.com/uc?export=download&id=1-EPyj2Z_oqpE-dOaZggIupq3i_Hne59Y'  # Đảm bảo URL là đúng
 # Hàm tải tệp từ Google Drive 
 def download_file_from_google_drive(url, destination): 
     file_id = url.split('/')[-2]  # Lấy file_id từ URL
-    URL = f"https://drive.google.com/uc?export=download&id={1-EPyj2Z_oqpE-dOaZggIupq3i_Hne59Y}"
+    URL = f"https://drive.google.com/uc?export=download&id={file_id}"
     session = requests.Session() 
     response = session.get(URL, stream=True)
     token = get_confirm_token(response)
