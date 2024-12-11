@@ -3,4 +3,3 @@ Pillow
 scikit-image
 bidict
 requests
-pickle
