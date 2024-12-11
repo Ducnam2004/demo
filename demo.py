@@ -53,15 +53,13 @@ if not os.path.exists(output):
         download_file_from_google_drive(url, output) 
     except Exception as e: 
         st.error(f"Không thể tải tệp mô hình từ Google Drive: {e}")
-# Kiểm tra nội dung tệp 
-try: 
-    with open(output, "rb") as file: 
-        header = file.read(4) 
-        st.write("Header của tệp:", header) 
-        if header[:2] != b'\x80\x03': 
-            st.error("Đây không phải là tệp pickle hợp lệ") 
-except Exception as e: 
-    st.error("Không thể đọc nội dung tệp: ", e)
+# Kiểm tra mô hình có phải là pickle hợp lệ không
+try:
+    with open(output, "rb") as file:
+        model = load(file)  # Thử nạp mô hình từ tệp pickle
+    st.write("Mô hình đã được tải thành công.")
+except Exception as e:
+    st.error(f"Không thể tải mô hình pickle: {e}")
     
 if file is not None: 
     # Đọc ảnh từ tệp tải lên trực tiếp từ bộ nhớ 
