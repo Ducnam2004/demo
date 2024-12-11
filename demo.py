@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 from PIL import Image
-from pickle import load
+from joblib import load
 from skimage import feature
 from bidict import bidict
 import io 
