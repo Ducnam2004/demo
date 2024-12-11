@@ -24,21 +24,23 @@ file = st.file_uploader('Tải ảnh lên', type=['jpg', 'jpeg', 'png', 'jfif'])
 # URL chia sẻ Google Drive 
 url = 'https://drive.google.com/uc?id=1-EPyj2Z_oqpE-dOaZggIupq3i_Hne59Y' 
 output = 'svm_model_hog.pkl' 
+
 # Hàm tải tệp từ Google Drive 
 def download_file_from_google_drive(url, destination): 
     URL = "https://drive.google.com/uc?export=download"
     session = requests.Session() 
-    response = session.get(url, stream=True) 
+    response = session.get(URL, params={'id': file_id}, stream=True)
     token = get_confirm_token(response) 
     if token: 
-        params = {'confirm': token} 
-        response = session.get(url, params=params, stream=True) 
+        params = {'id': file_id, 'confirm': token} 
+        response = session.get(URL, params=params, stream=True)
     save_response_content(response, destination) 
 def get_confirm_token(response): 
     for key, value in response.cookies.items(): 
         if key.startswith('download_warning'): 
             return value 
     return None 
+    
 def save_response_content(response, destination): 
     CHUNK_SIZE = 32768 
     with open(destination, "wb") as f: 
@@ -51,7 +53,16 @@ if not os.path.exists(output):
         download_file_from_google_drive(url, output) 
     except Exception as e: 
         st.error(f"Không thể tải tệp mô hình từ Google Drive: {e}")
-
+# Kiểm tra nội dung tệp 
+try: 
+    with open(output, "rb") as file: 
+        header = file.read(4) 
+        st.write("Header của tệp:", header) 
+        if header[:2] != b'\x80\x03': 
+            st.error("Đây không phải là tệp pickle hợp lệ") 
+except Exception as e: 
+    st.error("Không thể đọc nội dung tệp: ", e)
+    
 if file is not None: 
     # Đọc ảnh từ tệp tải lên trực tiếp từ bộ nhớ 
     img = Image.open(io.BytesIO(file.getvalue())) 
