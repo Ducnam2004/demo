@@ -3,3 +3,4 @@ Pillow
 scikit-image
 bidict
 requests
+joolib
